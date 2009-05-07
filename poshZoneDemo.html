@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>A test page for poshZones</title>
+    <style type="text/css">
+        .poshZoneDescription {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+<h2>PoshZone Demo</h2>
+
+<div>Please install this version of <a href="operator.xpi">operator</a> into Firefox for this demo. I haven't been able to set the mime type of the file on the server so you will have to save it to disk and then open it in Firefox to install it as a plugin. Next you will need to register poshZone as a <a href="poshZone.js">dataformat</a> and then add some sample poshZone <a href="poshZoneSampleActions.js">actions</a> into operator. </div> More detailed steps <a href="http://poshzone.wikidot.com/startusing">here</a>
+<div>
+    The content below is marked up using poshZones. Once you have restarted FireFox and reloaded this page you should see <em>poshZone(4)</em> highlighted in your operator toolbar.</div>
+		<div>
+<img src="poshZoneMenu.JPG" alt="Posh zone menu"></img></div><div>
+		To see the results of an action on a new tab, hold ctrl whilst clicking the action.
+</div>
+
+<h3>Some of my favourite movies</h3>
+<div>
+    Note: Text copied from <a href="http://imdb.com">IMDB</a> to make up content.
+</div>
+<div class="poshZone">
+    <span class="poshZoneDescription">Movie: Cold Mountain</span>
+    <dl class="movie">
+        <em class="movieName">Cold Mountain</em>. Made in <span class="movieYear">2003</span>. Watch it.
+        <p>In the waning days of the American Civil War, a wounded soldier (Law) embarks on a perilous journey back home to
+            Cold Mountain, North Carolina to reunite with his sweetheart (Kidman). Based on the novel by Charles Frazier.
+        </p>
+    </dl>
+</div>
+
+<div class="poshZone">
+    <span class="poshZoneDescription">Movie: Good Will Hunting</span>
+    <div class="movie">
+        <a class="movieName" href="http://imdb.com">Good Will Hunting</a> (<span class="movieYear">1997</span>). Nice one.
+        <p>Will Hunting, a janitor at MIT, has a gift for mathematics which is discovered, and a psychologist tries to help him with his gift and the rest of his life.</p>
+    </div>
+</div>
+
+<h3>Some events that might interest you</h3>
+<div class="poshZone">
+<span class="poshZoneDescription">Firefox enthusiasts meetup</span>
+	<div class="poshEvent">
+			The <span class="place">London</span> Firefox enthusiasts are meeting up at the White Hart near Covent Gardern on <span class="date">27/08/2008</span>
+    </div>
+</div>
+
+<div class="poshZone">
+<span class="poshZoneDescription">Film festival</span>
+	<div class="poshEvent">
+			The festival of independent films begins in <span>Mumbai</span> on <span class="date">15-04-2008</span>
+	</div>
+</div>
+<h3> A concert</h3>
+<div id="hcalendar-some-concert" class="vevent">
+<abbr title="20080215T1700+0530" class="dtstart">February 15, 2008 5pm</abbr> to
+<abbr title="20080215T1900+0530" class="dtend">7pm</abbr>
+<span class="summary">Some concert</span> at 
+<span class="location">canary wharf, london</span>
+<div class="description">This is a great concert by someone</div>
+</div>
+
+</body>
+</html>

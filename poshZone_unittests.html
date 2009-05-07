@@ -1,0 +1,176 @@
+<html>
+ <head>
+  <title>Test Page for poshzone</title>
+   <script language="javascript">
+     jsversion = 1.7;
+   </script>
+   <script language="JavaScript" type="text/javascript" src="file:///media/iext3/home/bagheera/software/jsunit/app/jsUnitCore.js"></script>  
+   <!--<script language="JavaScript" type="text/javascript" src="file:///media/D/mycode/operator/chrome/operator/content/Microformats/Microformats.js"></script>  -->
+  <script language="javascript" src="file:///media/D/mycode/operator/poshZone.js"></script>
+ </head>
+ <body>
+
+ <div class="poshZone" id="11">
+   <SPAN class="field1">value1</SPAn>
+   <div class="list1">
+     <span class="item">i1</span>
+   </div>
+   <div class="list1">
+     <span class="item">i2</span>
+     <span class="name">somename</span>
+   </div>
+   <div class="list1">
+     <span class="item">i3</span>
+   </div>
+ </div>
+
+ <div id="testNotListLike">
+   <div class="zzz">xtx</div>
+   <div class="zzz">xfx</div>
+   <div class="zz">xxx</div>
+ </div>
+
+ <div id="testNotListLikeSingleDiv">
+   <div class="zz">xxx</div>
+ </div>
+
+ <div id="testListLike">
+   <div class="zzz">xtx</div>
+   <div class="zzz">xfx</div>
+   <div class="zzz">xxx</div>
+ </div>
+
+ <div id="testListLikeIgnore">
+   <div class="zzz">xtx</div>
+   <span class="qqw">dsf</span>
+   <center>some stuff
+     <div class="other">aaa</div>
+   </center>
+   <div class="zzz">xfx
+   <a href="http://acb.com">adf</a>
+   </div>
+   <dl class="zzz">
+     <dt>term1</dt>
+     <dt>term2</dt>
+     <dd>some defn</dd>
+   </dl>
+   <div class="zzz">xxx</div>
+ </div>
+
+ <div id="spanlike">
+   <h3 class="pzh3">PoshZone can recognize these things</h3>
+   <dt class="pzdt">dt outside dl</dt>
+   <dd class="pzdd">desc of dt</dd>
+   <dl class="pzdl">
+     <dt class="pzdt">span</dt>
+     <dd class="pzdd">desc of span</dd>
+     <dt>anchor</dt>
+     <dd>can also be used to markup poshzones</dd>
+   </dl>
+   <a href="http://google.com" class="pza">a link</a>
+   He weighs 180 <ABBR TITLE=pounds class="pzabbr">lbs.</ABBR>
+   <PRE class="pzpre"><CODE class="pzcode">java.lang.StringBuilder</CODE></PRE>
+   <CODE class="pzcode">java.io.File</CODE>
+   <dfn class="pzdfn">poshzone-defined</dfn>
+   <em class="pzem">no more!</em>
+   <q cite="Sriram" class="pzq">I didn't say that</q>
+   <CITE class="pzcite">The Toronto Star</CITE> gave its review of the movie <CITE>Titanic</CITE> yesterday.
+   <p class="pzp">finally a paragraph - cannot be a container</p>
+   <ol class="pzol">
+     <li class="pzli">order1</li>
+     <li class="pzli">order2</li>
+     <li class="pzli">order3</li>
+   </ol>
+   <ul class="pzul">
+     <li class="pzli">anarchy1</li>
+     <li class="pzli">anarchy2</li>
+     <li class="pzli">anarchy3</li>
+   </ul>
+ </div>
+
+ <div id="doNotMapWhereNoClass">
+     <div class="top">
+       <span class="inner">something</span>
+       <span>classless text</span>
+       <div class="topple">
+         <div><em>ahem</em></div>
+         <abbr class="mapit">VM</abbr>
+       </div>
+     </div>
+ </div>
+
+ <script language="javascript">
+    function mock(map){
+      this.content = map;
+    }
+    function testMap() {
+      var map = poshZone_definition.mapPoshZone(document.getElementById('11'));
+      poshAction.doAction(new mock(map), "poshZone");//just a debug
+      assertEquals("field1", 'value1', map['field1']);
+      assertEquals("item1", 'i1', map["list1"][0]['item']);
+      assertEquals("item2", 'i2', map["list1"][1]['item']);
+      assertEquals("item2", 'somename', map["list1"][1]['name']);
+      assertEquals("item3", 'i3', map["list1"][2]['item']);
+    }
+    function testNotListLikeIfAllDivClassesArentSame(){
+      var nodeset = poshZone_definition.getDivs(document.getElementById('testNotListLike'));
+      assertFalse(poshZone_definition.isListLike(nodeset));
+    }
+    function testNotListLikeIfOnlyOneChildDiv(){
+      var nodeset = poshZone_definition.getDivs(document.getElementById('testNotListLikeSingleDiv'));
+      assertFalse(poshZone_definition.isListLike(nodeset));
+    }
+    function testListLikeIfAllDivClassesAreSame(){
+      var nodeset = poshZone_definition.getDivs(document.getElementById('testListLike'));
+      assertTrue(poshZone_definition.isListLike(nodeset));
+    }
+    function testListLikeIfAllDivClassesAreSameIgnoringOtherStuff(){
+      var nodeset = poshZone_definition.getDivs(document.getElementById('testListLikeIgnore'));
+      assertTrue(poshZone_definition.isListLike(nodeset));
+    }
+   function testMapForOtherSpanLikeStuff(){
+     var map = poshZone_definition.mapPoshZone(document.getElementById('spanlike'));
+     assertEquals("h3", "PoshZone can recognize these things", map['pzh3']);
+     assertEquals("dt", "dt outside dl", map['pzdt']);
+     assertEquals("dd", "desc of dt", map['pzdd']);
+     assertEquals("a", "a link", map['pza']);
+     assertEquals("abbr", "lbs.", map['pzabbr']);
+     assertEquals("abbr", "lbs.", map['pzabbr']);
+     assertEquals("code", "java.io.File", map['pzcode']);
+     assertEquals("dfn", "poshzone-defined", map['pzdfn']);
+     assertEquals("em", "no more!", map['pzem']);
+     assertEquals("q", "I didn't say that", map['pzq']);
+     assertEquals("cite", "The Toronto Star", map['pzcite']);
+     assertEquals("p", "finally a paragraph - cannot be a container", map['pzp']);
+   }
+    function testMapForOtherDivLikeStuff(){
+      var map = poshZone_definition.mapPoshZone(document.getElementById('spanlike'));
+      poshAction.doAction(new mock(map), "poshZone");//just a debug
+      assertEquals("dl", "span", map['pzdl']['pzdt']);
+      assertEquals("pre", "java.lang.StringBuilder", map['pzpre']['pzcode']);
+      assertEquals("ol", "order2", map['pzol']['pzli'][1]);
+      assertEquals("ul", "anarchy1", map['pzul']['pzli'][0]);
+    }
+    function testDoNotMapWhereNoClassAttrib(){
+      var map = poshZone_definition.mapPoshZone(document.getElementById('doNotMapWhereNoClass'));
+      assertUndefined(map['top'][null]);
+      assertUndefined(map['top']['topple'][null]);
+      assertEquals('2ndlevel', 'VM', map['top']['topple']['mapit']);
+      assertEquals('1stlevel', 'something', map['top']['inner']);
+    }
+  </script>
+ <div id = "multipleClasses">
+   <div class="abc pqr">
+     <span class="ijk mno">something</span>
+   </div>
+ </div>
+  <script language="javascript">
+    function testMapNodesWithMultipleClasses(){
+      var map = poshZone_definition.mapPoshZone(document.getElementById('multipleClasses'));
+      assertEquals("abc", "something", map['abc']['ijk']);
+      assertEquals("pqr", "something", map['pqr']['ijk']);
+    }
+  </script>
+ 
+</body>
+</html>
